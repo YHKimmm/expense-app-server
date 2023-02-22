@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using expense_app_server.CustomException;
 using Microsoft.AspNet.Identity;
 using expense_app_server.Utilities;
+using System.Text.RegularExpressions;
 
 namespace expense_app_server.Repository
 {
@@ -60,12 +61,30 @@ namespace expense_app_server.Repository
             var checkUser = await _context.Users
                 .FirstOrDefaultAsync(u => u.Username == user.Username);
 
+            string upperCasePattern = @"[A-Z]";
+
             if (checkUser != null)
             {
                 throw new UsernameAlreadyExistsException("Username aleardy exists");
             }
 
-            if(!string.IsNullOrEmpty(user.Password))
+            if (string.IsNullOrEmpty(user.Password))
+            {
+                throw new ArgumentNullException(nameof(user.Password), "Password should not be empty");
+            }
+
+            if (user.Password.Length < 8)
+            {
+                throw new PasswordException("Password should be at least 8 characters long");
+            }
+
+            if (!Regex.IsMatch(user.Password, upperCasePattern))
+            {
+                throw new PasswordException("Password should contain at least one uppercase letter");
+            }
+
+
+            if (!string.IsNullOrEmpty(user.Password))
             {
                 user.Password = _passwordHasher.HashPassword(user.Password);
             }
