@@ -9,5 +9,6 @@ namespace expense_app_server.Interfaces
         Expense CreateExpense(Expense expense);
         void DeleteExpense(Expense expense);
         Expense UpdateExpense(Expense expense);
+        Task<double> GetTotalExpensesAsync();
     }
 }

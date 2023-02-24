@@ -1,5 +1,6 @@
 ﻿using expense_app_server.Interfaces;
 using expense_app_server.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace expense_app_server.Repository
 {
@@ -12,6 +13,16 @@ namespace expense_app_server.Repository
             _context = context;
             // compare user from db & user from token
             _user = _context.Users.First(u => u.Username == httpContextAccessor.HttpContext.User.Identity.Name);
+        }
+        public async Task<double> GetTotalExpensesAsync()
+        {
+            var expenses = await _context.Expenses
+                .Where(e => e.User.Id == _user.Id)
+                .ToListAsync();
+
+            double totalExpenses = expenses.Sum(e => e.Amount);
+
+            return totalExpenses;
         }
 
         public Expense CreateExpense(Expense expense)
