@@ -22,7 +22,7 @@ namespace expense_app_server.Controllers
             return Ok(_expenseRepository.GetExpenses());
         }
 
-        [HttpGet("total")]
+        [HttpGet("totalexpense")]
         public async Task<IActionResult> GetTotalExpenseAmount()
         {
             var totalExpenses = await _expenseRepository.GetTotalExpensesAsync();
