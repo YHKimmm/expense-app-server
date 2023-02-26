@@ -64,7 +64,7 @@ builder.Services.AddAuthentication(opts =>
 
 var app = builder.Build();
 
-// need to delete migration folder & database in sql
+// need to delete migration folder
 using var scope = app.Services.CreateScope();
 using var db = scope.ServiceProvider.GetRequiredService<ExpenseContext>();
 db.Database.Migrate();
