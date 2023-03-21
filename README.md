@@ -26,16 +26,18 @@ Expense Manager is an app enables users to easily track their expenses by provid
 
 1. Clone the repository
 
-2. Install the dependencies:
+2. Open the project in Visual Studio
+
+3. Build the solution to restore the dependencies:
 
 ```
-  npm install
+   dotnet build
 ```
 
-3. Start the development server:
+3. Start the development server
 
 ```
-  npm start
+   dotnet run
 ```
 
 ## Frontend Repository
